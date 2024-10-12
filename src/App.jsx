@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
-
 import Textbox from "./components/textbox/textbox";
 import Dropdown from "./components/dropdown/dropdown";
 import CustomButton from "./components/button/button";
-
 import "./App.css";
 
 function App() {
-  let subTotal = 0;
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+    const storedCartItems = localStorage.getItem("cartItems");
+    return storedCartItems ? JSON.parse(storedCartItems) : [];
+  });
   const [txtName, setTxtName] = useState("");
   const [textPrice, setTextPrice] = useState("");
   const [textQuantity, setTextQuantity] = useState("");
@@ -22,6 +22,12 @@ function App() {
     Luay: 120,
   };
   const [editIndex, setEditIndex] = useState(null);
+
+  let subTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   function onChange(e) {
     const id = e.target.id;
@@ -47,10 +53,9 @@ function App() {
         const updatedItems = [...cartItems];
         updatedItems[editIndex] = item;
         setCartItems(updatedItems);
-        setEditIndex(null); // Reset edit index
+        setEditIndex(null);
       } else {
-        const newItems = [...cartItems, item];
-        setCartItems(newItems);
+        setCartItems(prevItems => [...prevItems, item]);
       }
 
       setTxtName("");
@@ -61,6 +66,7 @@ function App() {
 
   function clearCart() {
     setCartItems([]);
+    localStorage.removeItem("cartItems"); 
   }
 
   function deleteItem(itemIndex) {
@@ -87,7 +93,7 @@ function App() {
   }
 
   function handleCheckout() {
-    window.location.href = "www.facebook.com"; // Replace with your actual link
+    window.location.href = "www.facebook.com"; 
   }
 
   return (
@@ -133,7 +139,7 @@ function App() {
               <CustomButton
                 onClick={clearCart}
                 label="Clear"
-                variant="dark"
+                variant="danger"
                 innerClass="m-1"
               />
             </div>
@@ -151,7 +157,6 @@ function App() {
               <tbody>
                 {cartItems.map((item, index) => {
                   const total = item.price * item.quantity;
-                  subTotal += total;
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>
