@@ -202,7 +202,7 @@ function App() {
             <div>
               <h4>Subtotal: {formatCurrency(subTotal)}</h4>
               <h4>Shipping Fee: {formatCurrency(shipping)}</h4>
-              <h2>Grand Total: {formatCurrency(subTotal + shipping)}</h2>
+              <h4>Grand Total: {formatCurrency(subTotal + shipping)}</h4>
               <div className="d-flex justify-content-center py-3">
                 <CustomButton
                   label="Checkout"
