@@ -11,9 +11,17 @@
 
 .sub-container,
 .item-container {
+  background: transparent;
+  backdrop-filter: blur(10px);
   width: 80%;
   padding: 10px;
-  border: 1px solid #000;
-  border-radius: 10px;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+body{
+  background-image: url(/src/assets/image/111.jpg);
+  background-size: cover;
+  background-position: center;
+  color: black;
 }
