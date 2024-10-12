@@ -61,6 +61,11 @@ function App() {
       setTxtName("");
       setTextPrice("");
       setTextQuantity("");
+
+      window.scrollTo({
+        top: document.querySelector(".item-container").offsetTop,
+        behavior: 'smooth'
+      });
     }
   }
 
@@ -80,6 +85,11 @@ function App() {
     setTextPrice(itemToEdit.price);
     setTextQuantity(itemToEdit.quantity);
     setEditIndex(itemIndex);
+
+    window.scrollTo({
+      top: document.querySelector(".sub-container").offsetTop,
+      behavior: 'smooth'
+    });
   }
 
   function formatCurrency(num) {
